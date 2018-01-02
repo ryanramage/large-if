@@ -1,5 +1,2 @@
-a,b,c,result
-happy,*,little,error
-sad,*,little,error
-happy,*,lots,ok
-sad,*,lots,ok
+happy,*,*,ok
+sad,*,*,error
