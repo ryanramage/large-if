@@ -1,21 +1,21 @@
-# decision-table-wildcards
+# large-if
 
 WIP - nothing to see here
 
 ## CLI Usage
 
-    npm i decision-table-wildcards -g
-    decision-table-wildcards
+    npm i large-if -g
+    large-if
 
 ## Module Usage
 
 
 ```
-npm install decision-table-wildcards
+npm install large-if
 ```
 
 ``` js
-var decision-table-wildcards = require('decision-table-wildcards')
+var large-if = require('large-if')
 ```
 
 ## License

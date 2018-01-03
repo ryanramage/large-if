@@ -1,17 +1,19 @@
 {
-  "name": "decision-table-wildcards",
+  "name": "large-if",
   "version": "1.0.0",
-  "description": "WIP - nothing to see here",
+  "description": "Use table based logic to make if type decisions",
   "bin": "./bin/cli.js",
   "main": "./lib/index.js",
   "dependencies": {
     "array-union": "^1.0.2",
     "async": "^2.6.0",
+    "cartesian": "^1.0.1",
     "csv2": "^0.1.1",
     "decision-table": "^1.0.5",
     "intersect": "^1.0.1",
     "levelup": "^2.0.1",
     "memdown": "^1.4.1",
+    "rc": "^1.2.2",
     "search-index": "^0.15.0",
     "tap": "^11.0.1",
     "through2": "^2.0.3",
@@ -25,14 +27,15 @@
     "tape": "^2.14.0"
   },
   "scripts": {
-    "test": "standard && ./node_modules/.bin/tap test/*.js --100  --coverage-report=html"
+    "test": "standard && tap test/*.js --100",
+    "coverage": "tap test/*.js --100  --coverage-report=html"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ryanramage/decision-table-wildcards.git"
+    "url": "https://github.com/ryanramage/large-if.git"
   },
   "bugs": {
-    "url": "http://github.com/ryanramage/decision-table-wildcards/issues"
+    "url": "http://github.com/ryanramage/large-if/issues"
   },
-  "homepage": "http://github.com/ryanramage/decision-table-wildcards"
+  "homepage": "http://github.com/ryanramage/large-if"
 }
