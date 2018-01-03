@@ -48,9 +48,20 @@ test('no matches', t => {
   setUp(t, path.resolve(__dirname, 'assets/table.csv'), null, run)
 })
 
-test('too many matches', t => {
+test('too many matches - ok', t => {
   let run = table => {
     table.decide(['a', 'b', 'c'], (err, category) => {
+      t.error(err)
+      t.equals(category, 'ok')
+      t.end()
+    })
+  }
+  setUp(t, path.resolve(__dirname, 'assets/too-many.csv'), null, run)
+})
+
+test('too many matches - error', t => {
+  let run = table => {
+    table.decide(['y', 'b', 'y'], (err, category) => {
       t.ok(err)
       t.end()
     })
