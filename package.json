@@ -1,6 +1,6 @@
 {
   "name": "large-if",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Use table based logic to make if type decisions",
   "bin": "./bin/cli.js",
   "main": "./lib/index.js",
