@@ -11,8 +11,10 @@ const opts = require('rc')('large-if', {
   wildcard: '*',
   verbose: false,
   'clamp-all': false,
-  'allow-multi-match': false
+  'allow-multi-match': false,
+  'csv-out': false
 })
+if (opts['csv-out']) opts.verbose = true // make it easier for the end user
 const csvLocation = opts._[0]
 if (!csvLocation) usage()
 
@@ -50,28 +52,32 @@ generateCombos(opts.wildcard, clampCheck, csvLocation, (err, combos, widths) => 
       })
     }, err => {
       if (err) return error(err)
-      console.log('Passing combos', passing)
-      console.log('Error combos', errors)
-      if (opts.verbose) printAll(all, widths)
+      if (!opts['csv-out']) console.log('Passing combos', passing)
+      if (!opts['csv-out']) console.log('Error combos', errors)
+      if (opts.verbose) printAll(opts, all, widths)
       if (errors.length) process.exit(1)
     })
   })
 
 })
 
-function printAll (all, widths) {
+function printAll (opts, all, widths) {
   let moreOutcomePadding = ''
   Object.keys(widths).forEach(w => moreOutcomePadding += leftPad('', widths[w]))
   all.forEach(d => {
     let outcome = d.outcome
     if (!Array.isArray(d.outcome)) outcome = [outcome]
     let asArray = Object.keys(d.row).map((col, i) => {
+      if (opts['csv-out']) return d.row[col]
       return leftPad(d.row[col], widths[i])
-    }).join('\t')
-    if (d.err) console.log(chalk.red(asArray) + `\t${d.err.toString()}`)
+    })
+    if (d.err) {
+      if (opts['csv-out']) console.log(d.row.join(',') + ',' + d.err.toString())
+      else console.log(chalk.red(asArray.join('\t')) + `\t${d.err.toString()}`)
+    }
     else {
-      console.log(asArray, chalk.green(`${outcome.join(' ')}`))
-
+      if (opts['csv-out']) console.log(asArray.join(',') + ',' + outcome.join(' '))
+      else console.log(asArray.join('\t'), chalk.green(`${outcome.join(' ')}`))
     }
   })
 }
