@@ -19,6 +19,27 @@ test('outcomes', t => {
 })
 
 test('missing outcome file', t => {
+  let opts = {
+    'allow-multi-match': true,
+    outcomeDir: path.resolve(__dirname, 'outcomes')
+  }
+  let table = new DecisionTable(columns, opts)
+  setup(table, () => {
+    table.addRow(['*', 'b', '*', '*', 'yellow'], () => {
+      let verify = colour => {
+        t.notEqual('green', colour)
+        t.notEqual('red', colour)
+      }
+      let context = { verify }
+      table.if(['b', 'b', 'b', 'b'], context,  err => {
+        t.error(err)
+        t.end()
+      })
+    })
+  })
+})
+
+test('multi outcomes called', t => {
   let opts = { outcomeDir: path.resolve(__dirname, 'outcomes') }
   let table = new DecisionTable(columns, opts)
   setup(table, () => {
@@ -28,6 +49,7 @@ test('missing outcome file', t => {
     })
   })
 })
+
 
 function setup (table, done) {
   async.parallel([
