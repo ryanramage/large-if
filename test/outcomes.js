@@ -1,4 +1,5 @@
 const DecisionTable = require('../lib')
+const async = require('async')
 const path = require('path')
 const test = require('tape')
 const columns = ['1', '2', '3', '4', 'outcome']
@@ -6,23 +7,33 @@ const columns = ['1', '2', '3', '4', 'outcome']
 test('outcomes', t => {
   let opts = { outcomeDir: path.resolve(__dirname, 'outcomes') }
   let table = new DecisionTable(columns, opts)
-  setup(table)
-  process.nextTick(() => {
-    let verify = colour => {
-      console.log('got colour', colour)
-      t.equals('black', c)
-    }
+  setup(table, () => {
+    let verify = colour => t.equals('black', colour)
     let context = { verify }
-    table.if(['b', 'r', 'r', 'r'], context, () => {
+    table.if(['b', 'r', 'r', 'r'], context, err => {
+      t.error(err)
       t.ok('done called')
       t.end()
     })
   })
-
-
 })
-function setup (table) {
-  table.addRow(['b', '*', '*', '*', 'black'])
-  table.addRow(['g', '*', '*', '*', 'green'])
-  table.addRow(['y', '*', '*', '*', 'yellow'])
+
+test('missing outcome file', t => {
+  let opts = { outcomeDir: path.resolve(__dirname, 'outcomes') }
+  let table = new DecisionTable(columns, opts)
+  setup(table, () => {
+    table.if(['r', 'r', 'r', 'r'], err => {
+      t.ok(err)
+      t.end()
+    })
+  })
+})
+
+function setup (table, done) {
+  async.parallel([
+    cb => table.addRow(['b', '*', '*', '*', 'black'], cb),
+    cb => table.addRow(['g', '*', '*', '*', 'green'], cb),
+    cb => table.addRow(['y', '*', '*', '*', 'yellow'], cb),
+    cb => table.addRow(['r', '*', '*', '*', 'red'], cb)
+  ], done)
 }

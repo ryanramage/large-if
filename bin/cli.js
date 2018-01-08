@@ -61,7 +61,7 @@ generateCombos(opts.wildcard, clampCheck, csvLocation, (err, combos, widths) => 
 
 function printAll (all, widths) {
   let moreOutcomePadding = ''
-  Object.keys(widths).forEach(w => moreOutcomePadding+=leftPad('', widths[w]))
+  Object.keys(widths).forEach(w => moreOutcomePadding += leftPad('', widths[w]))
   all.forEach(d => {
     let outcome = d.outcome
     if (!Array.isArray(d.outcome)) outcome = [outcome]
