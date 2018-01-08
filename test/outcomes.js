@@ -31,7 +31,7 @@ test('missing outcome file', t => {
         t.notEqual('red', colour)
       }
       let context = { verify }
-      table.if(['b', 'b', 'b', 'b'], context,  err => {
+      table.if(['b', 'b', 'b', 'b'], context, err => {
         t.error(err)
         t.end()
       })
@@ -49,7 +49,6 @@ test('multi outcomes called', t => {
     })
   })
 })
-
 
 function setup (table, done) {
   async.parallel([
