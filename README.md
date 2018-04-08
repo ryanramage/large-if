@@ -1,6 +1,6 @@
 # large-if
 
-WIP - nothing to see here
+A way to specify large table like if expressions
 
 ## CLI Usage
 
