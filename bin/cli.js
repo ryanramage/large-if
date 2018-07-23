@@ -74,8 +74,7 @@ function printAll (opts, all, widths) {
     if (d.err) {
       if (opts['csv-out']) console.log(d.row.join(',') + ',' + d.err.toString())
       else console.log(chalk.red(asArray.join('\t')) + `\t${d.err.toString()}`)
-    }
-    else {
+    } else {
       if (opts['csv-out']) console.log(asArray.join(',') + ',' + outcome.join(' '))
       else console.log(asArray.join('\t'), chalk.green(`${outcome.join(' ')}`))
     }
